@@ -145,6 +145,8 @@ table {
 .modalBox-content {
   text-align: center;
   position: relative;
+  -webkit-animation: slideIn .5s forwards 0s ease-in-out;
+          animation: slideIn .5s forwards 0s ease-in-out;
 }
 
 .modalBox-content .close-btn {
@@ -157,6 +159,42 @@ table {
 
 .modalBox-content p {
   margin-bottom: 20px;
+}
+
+@-webkit-keyframes slideIn {
+  0% {
+    -webkit-transform: rotate(0deg) translateX(-1200px);
+            transform: rotate(0deg) translateX(-1200px);
+    opacity: 0;
+  }
+  75% {
+    -webkit-transform: rotate(0deg) translateX(200px);
+            transform: rotate(0deg) translateX(200px);
+    opacity: .8;
+  }
+  100% {
+    -webkit-transform: rotate(0deg) translateX(0);
+            transform: rotate(0deg) translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    -webkit-transform: rotate(0deg) translateX(-1200px);
+            transform: rotate(0deg) translateX(-1200px);
+    opacity: 0;
+  }
+  75% {
+    -webkit-transform: rotate(0deg) translateX(200px);
+            transform: rotate(0deg) translateX(200px);
+    opacity: .8;
+  }
+  100% {
+    -webkit-transform: rotate(0deg) translateX(0);
+            transform: rotate(0deg) translateX(0);
+    opacity: 1;
+  }
 }
 
 /*==============================*/

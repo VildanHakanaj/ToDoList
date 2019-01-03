@@ -16,11 +16,8 @@
     display: none
     justify-content: center
     align-items: center  
-
 .show-me
     display: flex
-
-
 #createItemModal 
     input[type=text]
         width: 100%
@@ -75,6 +72,7 @@
 .modalBox-content
     text-align: center
     position: relative
+    animation: slideIn .5s forwards 0s ease-in-out
     .close-btn
         position: absolute
         top: 10px
@@ -83,6 +81,18 @@
         font-size: 30px
     p
         margin-bottom: 20px
+@keyframes slideIn
+    0%
+        transform: rotate(0deg) translateX(-1200px)
+        opacity: 0
+        
+    75%
+        transform: rotate(0deg) translateX(200px)
+        opacity: .8
+    100%
+        transform: rotate(0deg) translateX(0)
+        opacity: 1
+        
 
 /*==============================*/
 /*          GENERAL             */
