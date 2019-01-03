@@ -17,7 +17,7 @@ $(document).ready(function () {
         $createItemModal.addClass('show-me');
     });
 
-
+    //Close the modal box
     $noBtn.on('click', function(){
         $removeModal.removeClass('show-me');
     });
