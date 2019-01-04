@@ -28,8 +28,6 @@ class Db{
     //$config = parse_ini_file(DOCROOT.'config.ini');
     //Note: on loki, you file should be located in the pwd folder (which should be in your user directory)
     $config = parse_ini_file('config/db.ini'); 
-    
-        
     // Try and connect to the database
     $this->dbconn = @new mysqli($config['dbhost'],$config['dbuser'],$config['dbpass'],$config['dbname']);
   

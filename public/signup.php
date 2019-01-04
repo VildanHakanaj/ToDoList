@@ -22,7 +22,9 @@
 
         //if no errors continue on registration
         if(empty($errors)){
-            echo "Succesfully registered";
+
+            registerUser($user);
+
         }        
     }
     ?>

@@ -1,18 +1,20 @@
 <?php
 function validateSignup($user, $errors){
     //Check if the fileds are empty or not.
-    if(isFieldEmpty($user, $errors)){
+    if(isFieldEmpty($user)){
         return $errors['empty'] = "Please fill all the fields";
-    }else{
-        //Check only if all the fields have content 
+    }else{//Only if all the fields have something in them
+
         if(!isMinLen($user['name'], 3)){
             $errors['name'] = "Name needs to be at leas 3 character long";
         }
-
+        
+        //Check if the email is correct format 
         if(!verifyEmail($user['email'])){
             $errors['email'] = "Please enter a valid email";
         }
 
+        //Check the passwords length
         if(!isMinLen($user['pass'], 6)){
             $errors['pass'] = "Password needs to be at least 6 character long";
         }
@@ -20,24 +22,77 @@ function validateSignup($user, $errors){
     return $errors;
 }
 
-//Validate the login section
+/*
+    This function will validate the login credential 
+    against the database
+    return $errors array with error messages
+    return
+ */
 function validateLogin($user){
-    $errors = array();
-    if(isFieldEmpty){
-
-    }else{
-
+    global $db;
+    //Check if the fields are filled
+    if(!isFieldEmpty($user)){
+        //Select by username
+        $results = select_by_username($user['uid']);
+        //Check if there was a hit
+        if($results->num_rows > 0){
+            //There is a match
+            $row = $results->fetch_assoc();
+            //Make sure the password is correct
+            if($row['uid'] == $user['uid'] && $row['pass'] == $user['pass']){
+                return $row;
+            }
+        }
     }
+    return false;
+}
+
+/**
+ * This function will login the user
+ * after the user is verified to be in the database
+ * creates the session
+ * 
+ * @redirects the user to the home page
+ */
+function loginUser($rows = []){
+   $_SESSION['uid'] = $rows['uid'];
+   $_SESSION['id'] = $rows['id']; 
+
+   header('Location: /index.php');
+   exit();
+   
+}
+/**
+ * This function will check if the 
+ * username already exists in the 
+ * database;
+ * @param $username --> username you want to check
+ * @return true if the username is unique
+ * @return false if the username is not unique 
+ */
+function isUnique($username){
+    $results = select_by_username($username);
+    return ($result->num_rows > 0) ? false : true;
+ }
+
+//Select by the username
+function select_by_username($username){
+    global $db;
+    $sql = "SELECT * FROM ";
+    $sql = $sql . " users WHERE uid = ?";
+    $type = 's';
+    $params = array(&$username);
+    return $db->select_param($sql, $type, $params);
 }
 
 //Check if the user fields are empty or not
-function isFieldEmpty($user, $errors){
+function isFieldEmpty($user){
     foreach($user as $field){
         if(empty($field)){
             return true;
         }
     }
-    return $false;
+    return false;
 }
 
 //Check if email is correct format
