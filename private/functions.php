@@ -1,10 +1,10 @@
 <?php
 function validateSignup($user, $errors){
     //Check if the fileds are empty or not.
-    $errors = isFiledEmpty($user, $errors);
-    //Check only if all the fields have content 
-    if(empty($errors)){
-
+    if(isFieldEmpty($user, $errors)){
+        return $errors['empty'] = "Please fill all the fields";
+    }else{
+        //Check only if all the fields have content 
         if(!isMinLen($user['name'], 3)){
             $errors['name'] = "Name needs to be at leas 3 character long";
         }
@@ -20,16 +20,24 @@ function validateSignup($user, $errors){
     return $errors;
 }
 
+//Validate the login section
+function validateLogin($user){
+    $errors = array();
+    if(isFieldEmpty){
+
+    }else{
+
+    }
+}
+
 //Check if the user fields are empty or not
-function isFiledEmpty($user, $errors){
+function isFieldEmpty($user, $errors){
     foreach($user as $field){
         if(empty($field)){
-            if(!array_key_exists('empty', $errors)){
-                $errors['empty'] = "Please fill all the fields";
-            }
+            return true;
         }
     }
-    return $errors;
+    return $false;
 }
 
 //Check if email is correct format

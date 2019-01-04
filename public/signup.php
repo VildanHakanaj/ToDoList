@@ -13,11 +13,13 @@
         $user['email']  = htmlspecialchars(htmlentities($_POST['email']))   ?? '';
         $user['uid']    = htmlspecialchars(htmlentities($_POST['uid']))     ?? '';
         $user['pass']   = htmlspecialchars(htmlentities($_POST['pass']))    ?? '';
-
+        
         //Validate the form
         $errors = validateSignup($user, $errors);
+        
         //Print the array
         print_array($errors);
+
         //if no errors continue on registration
         if(empty($errors)){
             echo "Succesfully registered";
