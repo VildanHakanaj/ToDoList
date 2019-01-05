@@ -1,5 +1,10 @@
 <?php
 require_once('../private/init.php');
+
+if(isLoggedIn()){
+    header('Location: /index.php');
+}
+
 //Make the sticky footer
 $user['uid'] = '';
 
