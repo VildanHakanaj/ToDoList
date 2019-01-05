@@ -38,10 +38,14 @@
         <div class="container">
             <h3>Wish List</h3>
             <ul>
-                <li> <a href="/index.php">Home</a></li>
-                <li> <a href="#">Items</a></li>
-                <li> <a href="/login.php">Login</a></li>
-                <li> <a href="/signup.php">Signup</a></li>
+                <?php if(isset($_SESSION['id'])): ?>
+                    <li> <a href="/index.php">Home</a></li>
+                    <li> <a href="#">Items</a></li>
+                    <li><a href="/logout.php">Logout</a></li>
+                <?php else: ?>
+                    <li> <a href="/login.php">Login</a></li>
+                    <li> <a href="/signup.php">Signup</a></li>
+                <?php endif;?>
             </ul>
         </div>
     </nav>

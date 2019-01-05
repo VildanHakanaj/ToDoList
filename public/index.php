@@ -1,8 +1,14 @@
 <?php
 require_once('../private/init.php');
+if(!isset($_SESSION['id'])){
+    header('Location: /login.php');
+    exit();
+}
+
+echo $_SESSION['id'] . "<br>";
+echo $_SESSION['uid'];
+
 include(SHARED_PATH . '/_header.php');
-
-
 ?>
 
     <main class="container">

@@ -227,6 +227,14 @@ body, html {
   margin: 10px 0;
 }
 
+.message span {
+  margin-bottom: 10px;
+  display: block;
+  padding: 0;
+  border: none;
+  text-align: left;
+}
+
 .danger {
   color: #E01A4F;
   background-color: #f2dede;

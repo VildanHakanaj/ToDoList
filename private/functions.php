@@ -1,14 +1,24 @@
 <?php
-function validateSignup($user, $errors){
+/**
+ * This function will validate the user registration
+ * @return $errors --> all the error messages
+ * @param $user --> the user field to be validated
+ */
+function validateSignup($user){
+    $errors = array();
     //Check if the fileds are empty or not.
     if(isFieldEmpty($user)){
         return $errors['empty'] = "Please fill all the fields";
     }else{//Only if all the fields have something in them
 
-        if(!isMinLen($user['name'], 3)){
-            $errors['name'] = "Name needs to be at leas 3 character long";
+        //Check the length of username
+        if(!isMinLen($user['uid'], 3)){
+            $errors['uid'] = "Username needs to be at least 3 character long";
+            //check if the username is unique
+        }else if( !isUnique($user['uid'] )){
+            $errors['uid'] = "Username already exists";
         }
-        
+
         //Check if the email is correct format 
         if(!verifyEmail($user['email'])){
             $errors['email'] = "Please enter a valid email";
@@ -39,7 +49,7 @@ function validateLogin($user){
             //There is a match
             $row = $results->fetch_assoc();
             //Make sure the password is correct
-            if($row['uid'] == $user['uid'] && $row['pass'] == $user['pass']){
+            if( $row['uid'] == $user['uid'] && password_verify($user['pass'], $row['pass'])){
                 return $row;
             }
         }
@@ -47,21 +57,34 @@ function validateLogin($user){
     return false;
 }
 
+#region Helper Methods
 /**
- * This function will login the user
- * after the user is verified to be in the database
- * creates the session
- * 
- * @redirects the user to the home page
+ * This function will utilize the createNewUser method
+ * to create a new user and getting the id from the insertion
+ * then will use the session and store the variables
  */
-function loginUser($rows = []){
-   $_SESSION['uid'] = $rows['uid'];
-   $_SESSION['id'] = $rows['id']; 
+function registerUser($user){
+    
+    $id = createNewUser($user);
 
-   header('Location: /index.php');
-   exit();
-   
+    $_SESSION['uid'] = $user['uid'];
+    $_SESSION['id'] = $id;    
+
+    header('Location: /index.php');
+    exit();
 }
+
+/**
+ * This function will check if the user 
+ * is logged in or not
+ * 
+ * @return false --> if the user is not logged in
+ * @return true --> if the user is looged in  
+ */
+function isLoggedIn(){
+    return isset($_SESSION['id']);
+}
+
 /**
  * This function will check if the 
  * username already exists in the 
@@ -72,8 +95,50 @@ function loginUser($rows = []){
  */
 function isUnique($username){
     $results = select_by_username($username);
-    return ($result->num_rows > 0) ? false : true;
+    return ($results->num_rows > 0) ? false : true;
  }
+
+#endregion 
+
+#region Queries
+/**
+ * This function will create an new sql statement
+ * hash the password and try and store the new user in
+ * the database
+ * 
+ * @param $user = [] --> is the users information taken from the form
+ * @return $id ==> return the id of the this user
+ */
+function createNewUser($user){
+    global $db;
+
+    $hash = password_hash($user['pass'], PASSWORD_DEFAULT);
+    
+    $sql = "INSERT INTO users (`name`,`email`,`uid`,`pass` ) ";
+    $sql = $sql . "VALUES(?,?,?,?)";
+    $type = 'ssss';
+    
+    $params = array(&$user['name'], &$user['email'], &$user['uid'], &$hash);
+    
+    return $db->insert_param($sql, $type, $params);
+}
+#endregion
+/**
+ * This function will login the user
+ * after the user is verified to be in the database
+ * creates the session
+ * 
+ * @redirects the user to the home page
+ */
+function loginUser($rows = []){
+   
+   $_SESSION['uid'] = $rows['uid'];
+   $_SESSION['id'] = $rows['id']; 
+
+   header('Location: /index.php');
+   exit();
+   
+}
 
 //Select by the username
 function select_by_username($username){
