@@ -25,6 +25,7 @@ if(isPostRequest()){
     }
 }
 
+$page_title = "Login ";
 include(SHARED_PATH . '/_header.php');
 ?>
     <main class="container">

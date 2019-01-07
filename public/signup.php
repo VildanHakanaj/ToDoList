@@ -24,7 +24,7 @@
             $error = true;
         }
     }
-
+    $page_title = "Signup";
     include(SHARED_PATH . '/_header.php');
     ?>
     <main class="container">

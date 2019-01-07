@@ -96,6 +96,12 @@ table {
   color: #bfbfbf;
 }
 
+#createItemModal form span {
+  display: block;
+  color: red;
+  text-align: left;
+}
+
 #createItemModal .btn-large {
   margin-top: 65px;
   margin-bottom: 130px;
