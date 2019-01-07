@@ -4,6 +4,7 @@ $(document).ready(function () {
     $removeBtn = $('.remove');
     $noBtn = $('#removeModal a:last-of-type');
     $addBtn = $('.add');
+    
     $createItemModal = $('#createItemModal');
 
     //Open the modal for removing items
@@ -47,20 +48,11 @@ $(document).ready(function () {
             /**Enter the error in the msg box and display the box */
          }else{
              /**Submit the form using ajax */
-             $.post("addItem.php", $item_title_value,
-                 function (data, textStatus, jqXHR) {
-                 },
-                 "dataType"
-             ).sucess(function(){
 
-             }).finaly(function(){
-
-             });
          }
          console.log($item_title_value);
-         
      });
-
+     
      function validate($items = []){
         let error = false;
         if($item_title_value == ""){
@@ -68,6 +60,10 @@ $(document).ready(function () {
          }
 
          return false;
+     }
+
+     function validateForms(){
+        
      }
      
 });

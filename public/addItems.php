@@ -10,8 +10,6 @@ $errors = [];
             $error['len'] = 'Title need to be at leas 3 characters';
         }
 
-        
-
         if(empty($errors)){
             die($_POST);
         }
