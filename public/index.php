@@ -9,6 +9,7 @@ if(!isset($_SESSION['id'])){
 
 //get the user id
 $id = $_SESSION['id'];
+die($_SESSION);
 //get the username
 $username = $_SESSION['uid'];
 //get the items

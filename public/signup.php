@@ -24,6 +24,7 @@
             $error = true;
         }
     }
+    //Get the title of the page
     $page_title = "Signup";
     include(SHARED_PATH . '/_header.php');
     ?>

@@ -5,6 +5,9 @@ define('PROJECT_ROOT', dirname(PRIVATE_PATH));
 define('PUBLIC_PATH', PROJECT_ROOT . '/public');
 define('SHARED_PATH', PRIVATE_PATH . '/shared');
 
+$public_end = substr($_SERVER['REQUEST_URI'], '0', '/public');
+define('');
+
 //Contains all the database class
 require_once('library.php');
 //Database connection instance

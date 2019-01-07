@@ -25,6 +25,7 @@ if(isPostRequest()){
     }
 }
 
+//Create the title of the file  
 $page_title = "Login ";
 include(SHARED_PATH . '/_header.php');
 ?>
