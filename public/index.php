@@ -36,7 +36,7 @@ include(SHARED_PATH . '/_header.php');
         <div class="modalBox-content card">
             <span class="close-btn">&times;</span>
             <h1>Create Item</h1>
-            <form action="<?= $_SERVER['PHP_SELF']; ?>" method="POST">
+            <form action="addItem.php?user_id= <?= $id ?>" method="POST" id="addItem">
                 <div>
                     <label for="title">Name</label>
                     <input type="text" name="title">
@@ -77,7 +77,7 @@ include(SHARED_PATH . '/_header.php');
                 </ul>
             <?php endif;?>
             <div class="buttons">
-                <a href="addItems.php" class="btn btn-small add">Add item</a>
+                <a class="btn btn-small add">Add item</a>
                 <a href="removeAll.php" class="btn btn-small remove">Remove All</a>
                 <a href="#" class="btn btn-large">Clear finished</a>
             </div>

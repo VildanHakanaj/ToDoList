@@ -11,3 +11,5 @@ require_once('library.php');
 $db = new Db();
 //Contains all the main functions
 require_once('functions.php');
+//Contains all the items function
+require_once('items.php');

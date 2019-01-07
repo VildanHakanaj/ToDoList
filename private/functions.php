@@ -122,7 +122,19 @@ function createNewUser($user){
     
     return $db->insert_param($sql, $type, $params);
 }
+
+function addItem($user_id, $item_title, $item_desc, $item_range){
+    global $db;
+    $sql = "INSERT INTO items (user_id, title, description, priority) ";
+    $sql = $sql . "VALUES(?,?,?,?)";
+    $type = "issi";
+    $params = array(&$user_id, &$item_title, &$item_desc, &$item_range);
+
+    $db->insert_param($sql, $type, $params);
+
+}
 #endregion
+
 /**
  * This function will login the user
  * after the user is verified to be in the database
@@ -176,7 +188,7 @@ function isMinLen($string, $len){
     return true;
 }
 
-function print_array($array){
+function test($array){
     echo "<pre>";
     print_r($array);
     echo "</pre>";
