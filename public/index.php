@@ -1,43 +1,31 @@
 <?php
 require_once('../private/init.php');
 
-if(!isset($_SESSION['id'])){
-    header('Location: /login.php');
-    exit();
-}
-
-
-//get the user id
-$id = $_SESSION['id'];
-die($_SESSION);
-//get the username
-$username = $_SESSION['uid'];
-//get the items
-$results = getItems($id);
-
 $error = false;
-if(isPostRequest()){
-    $itemTitle = htmlentities(strip_tags($_POST['title'])) ?? '';
-    $itemRange = htmlentities(strip_tags($_POST['priority'])) ?? '';
-    
-    if($itemTitle == ""){
-        $error = true;
-    }
-
-    $itemDesc = "This is a item";
-    if(!$error){
-        addItem($id, $itemTitle, $itemDesc, $itemRange);
-    } 
+$user_id = $_SESSION['id'];
+//check if the user is logged in
+if(!isLoggedIn()){
+    header('Location: login.php');
+    exit(1);
 }
 
+if(isPostRequest()){
+
+    $item = getValues($_POST);
+    insertItem($item, $user_id);
+}
+
+
+$row = getAllItems($user_id);
 $page_title = "Home";
 include(SHARED_PATH . '/_header.php');
+
 ?>
     <div class="overlay" id="createItemModal">
         <div class="modalBox-content card">
             <span class="close-btn">&times;</span>
             <h1>Create Item</h1>
-            <form action="addItem.php?user_id= <?= $id ?>" method="POST" id="addItem">
+            <form action="<?= $_SERVER['PHP_SELF']; ?>" method="POST" id="addItem">
                 <div>
                     <label for="title">Name</label>
                     <input type="text" name="title">
@@ -53,33 +41,31 @@ include(SHARED_PATH . '/_header.php');
             </form>
         </div>
     </div>
+    <!--BOX OVERLAY-->
     <div class="overlay" id="removeModal">
         <div class="modalBox-content card">
             <span class="close-btn">&times;</span>
             <p>Are you sure you want to remove all items</p>
             <div class="buttons">
-                <a href="#" class="btn btn-small">Yes</a>
+                <a href="<?= 'removeAll.php/' . $user_id ?>" class="btn btn-small">Yes</a>
                 <a href="#" class="btn btn-small">No</a></div>
         </div>
     </div>
     <main class="container">
         <section class="card home-card">
             <h1>School</h1>
-            <?php if($results->num_rows > 0):?>
-                <?php while($row = $results->fetch_assoc()): ?>
-                    <ul>
-                        <li><label><input type="checkbox"> <span class="label-text"><?= $row['title']; 
-                        ?></span></label></li>
-                    </ul>
-                <?php endwhile;?>
-            <?php else: ?>
+            <?php if(!empty($row)): ?>
                 <ul>
-                    <li>Try adding some items in the list</li>
+                    <?php foreach($row as $item): ?>
+                        <li><label><input type="checkbox"> <span class="label-text"><?= $item['title'] ?></span></label></li>
+                    <?php endforeach; ?>
                 </ul>
-            <?php endif;?>
+            <?php else: ?>
+                <li>No tasks yet?</li>
+            <?php endif; ?>
             <div class="buttons">
                 <a class="btn btn-small add">Add item</a>
-                <a href="removeAll.php" class="btn btn-small remove">Remove All</a>
+                <a href="<?= 'removeAll.php?id='. $user_id ?>" class="btn btn-small remove">Remove All</a>
                 <a href="#" class="btn btn-large">Clear finished</a>
             </div>
         </section>

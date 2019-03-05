@@ -10,7 +10,7 @@
 <body>
     <nav id="menu">
         <div class="container">
-            <h3>Wish List</h3>
+            <h3>Task Checker</h3>
             <ul>
                 <?php if(isset($_SESSION['id'])): ?>
                     <li> <a href="/index.php">Home</a></li>

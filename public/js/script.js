@@ -11,10 +11,33 @@ $(document).ready(function () {
         $removeBtn = $('.remove');
         $noBtn = $('#removeModal a:last-of-type');
         $addBtn = $('.add');
+        console.log($addBtn);
         $createItemModal = $('#createItemModal');
     //#endregion
     
+    /**
+     * REGISTRATION VALIDATION
+     * 
+     * 
+     */
 
+     //Get the form
+     let $registerForm = $('#signup');
+     //Get the error messages
+     let $nameError = $('.nameError');
+     let $emailError = $('.emailError');
+     let $usernameError = $('.usernameError');
+     let $passwordError = $('.passwordError');
+
+    
+
+
+     //Get the fields
+
+    /**
+     * 
+     * END OF THE REGISTER VALIDATION
+     */
     //#region Modal Boxes
         //Open the modal for removing items
         $removeBtn.on('click', function () { 
@@ -35,43 +58,7 @@ $(document).ready(function () {
             $createItemModal.removeClass('show-me');
         });
     //#endregion
-    
-
 
     //Close the modal box
-    
-
-    /**
-     * FORMS ADD ITEM AND FORM REMOVE ALL
-     * 
-     * 
-     */
-
-     //Get the form
-     let $addItem = $('#addItem');
-     let errorMsg = "Empty Field"
-     let erroMsgSpan = "<span class=\"error\"></span>"
-
-     //Validate the form and prevent from submiting it;
-     $addItem.on('submit', function(ev){
-         let $item_title_value = $('#addItem input[type=text]').val();        
-         ev.preventDefault();
-         if(!validate()){
-            /**Enter the error in the msg box and display the box */
-         }else{
-             /**Submit the form using ajax */
-
-         }
-         console.log($item_title_value);
-     });
-     
-     function validate($items = []){
-        let error = false;
-        if($item_title_value == ""){
-             return true;
-         }
-
-         return false;
-     }
 });
 

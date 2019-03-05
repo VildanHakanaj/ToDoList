@@ -242,9 +242,10 @@ body, html {
 }
 
 .danger {
-  color: #E01A4F;
-  background-color: #f2dede;
-  border: 2px solid #E01A4F;
+  color: red;
+  display: block;
+  text-align: left;
+  display: none;
 }
 
 .success {
